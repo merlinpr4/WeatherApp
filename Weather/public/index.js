@@ -6,7 +6,7 @@
         temp:null,
         weathDesc:null,
         wind:null,
-        rain:null,
+        rain:null},
     methods:{
         GetWeath : getWeather
         }
