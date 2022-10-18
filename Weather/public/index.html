@@ -43,6 +43,7 @@
                 GetWeath : getWeather
               }
             })
+
             //function that gets json data from the server
             function getWeather(){
               console.log("getWeather called");
@@ -77,6 +78,8 @@
                   
                    console.log(response.list[0].weather[0].description);
 
+
+                  //we need the next 4 days of data easily acceible 
 
 
                 })
