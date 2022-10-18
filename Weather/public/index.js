@@ -3,12 +3,10 @@
     data: {
         city: '',
         result: null,
-        d0:null,
         temp:null,
         weathDesc:null,
         wind:null,
         rain:null,
-        history :[]},
     methods:{
         GetWeath : getWeather
         }
@@ -23,33 +21,6 @@
         .then (response => {
             this.result = response.list;
             this.history.push(response.list);
-            //console.log( response.list);
-
-            //console.log(this.result[0].weather[0].description);
-
-            //the next 4 days
-            this.d0 = response.list[0];
-            this.d1 = response.list[1];
-            this.d2 = response.list[2];
-            this.d3 = response.list[3];
-            
-            //day 0 - today data
-            let d0Temp = this.d0.temp.day;
-            let d0Wind = this.d0.speed ; //not 100% confident on this come back
-            let d0Rain = this.d0.rain;
-
-            //console.log("day0:" + d0Temp + " " + d0Wind + " " + d0Rain);
-            //console.log("rain" + this.d0.rain);
-
-            // console.log("day 0");
-            //  console.log(response.list[0]);
-
-            //console.log("windspeed" + d0.speed);
-
-            
-            //console.log(response.list[0].weather[0].description);
-            //we need the next 4 days of data easily acceible 
-
             summary = getSummary(this.result);
             this.temp = summary[0];
             this.wind = summary[1];
