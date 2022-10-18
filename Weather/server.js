@@ -21,8 +21,13 @@ function sendWeather(req,res) {
 
 
     https.get(endpoint,(response) => {
-        response.on("data", (data) => res.send(data))
+        response.on("data", (data) => res.send(data)
+        )
+        console.log(data)
     })
+
+   
+})
 
    
 
