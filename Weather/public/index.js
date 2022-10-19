@@ -11,6 +11,7 @@
         weatherType:null},
     methods:{
         GetWeath : getWeather
+
         }
     })
 
@@ -125,3 +126,6 @@
 
                return [temp,wind,desp,rain];
         }
+
+      
+        
