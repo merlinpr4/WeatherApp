@@ -6,7 +6,9 @@
         temp:null,
         weathDesc:null,
         wind:null,
-        rain:null},
+        rain:null,
+        rainFall:null,
+        weatherType:null},
     methods:{
         GetWeath : getWeather
         }
@@ -20,18 +22,66 @@
         .then( response => response.json())
         .then (response => {
             this.result = response.list;
-            this.history.push(response.list);
             summary = getSummary(this.result);
             this.temp = summary[0];
             this.wind = summary[1];
             this.weathDesc = summary[2];
             this.rain = summary[3];
 
-            console.log(summary);
-            console.log(temp);
+          //  console.log(summary);
+          // console.log(temp);
+
+          this.weatherType = getTypeWeather(temp);
+         // console.log(this.weatherType);
+
+          this.rainFall= getRainFall(rain);
 
         })
         }
+
+        function getRainFall(rain)
+        {
+            sum = 0 ;
+            for ( var i = 0 ; i < temp.length ; i++)
+            {
+                sum += temp[i];
+            }
+
+            if (sum > 0)
+            {
+                rain = true;
+            }
+
+         return rain ;
+        }
+
+
+        function getTypeWeather(temp){
+            type = ""
+            sum = 0 ;
+            for ( var i = 0 ; i < temp.length ; i++)
+            {
+                sum += temp[i];
+            }
+
+            avg = sum/4 ;
+            
+            if (avg < 12)
+            {
+                type = "cold";
+            }
+            else if (avg >= 12 && avg <= 24)
+            {
+                type = "mild";
+            }
+            else 
+            {
+                type = "hot"
+            }
+
+            return type ;
+        }
+
 
         //Function that summarises the key values for the tables
         function getSummary(response){
