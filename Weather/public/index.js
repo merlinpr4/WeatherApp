@@ -25,20 +25,20 @@
         .then( response => response.json())
         .then (response => {
             this.result = response;
-           // console.log(response);
-            console.log(this.result);
-            summary = getSummary(this.result);
-            this.temp = summary[0];
-            this.wind = summary[1];
-            this.weathDesc = summary[2];
-            this.rain = summary[3];
+            //console.log(response);
+            //console.log(this.result);
+            //summary = getSummary(this.result);
+            this.temp = this.result[0];
+           // console.log("temp" + temp);
+           // console.log(this.temp);
+            this.wind = this.result[1];
+            this.weathDesc = this.result[2];
+            this.rain = this.result[3];
 
-           this.weatherType = getTypeWeather(temp);
-          
-           
-          this.rainFall= getRainFall(rain);
+            this.weatherType = getTypeWeather(this.temp);
+            this.rainFall= getRainFall(this.rain);
 
-          chart(this.weatherType);
+            chart(this.weatherType);
 
         })
         }
@@ -87,49 +87,6 @@
         }
 
 
-        //Function that summarises the key values for the tables
-        function getSummary(response){
-              //temp summary
-              temp = []
-              for (i = 0 ; i < 4 ; i ++)
-              {
-                  temp.push(response[i].temp.day);
-              }
-            //  console.log(temp)
-  
-              //windspeed
-              wind = []
-              for (i = 0 ; i < 4 ; i ++)
-              {
-                  wind.push(response[i].speed);
-              }
-              //console.log(wind)
-  
-              //weather description summary
-              desp = []
-              for (i = 0 ; i < 4 ; i ++)
-              {
-                   desp.push(response[i].weather[0].description);
-              }
-              //console.log(desp)
-
-               //weather description summary
-               rain = []
-               for (i = 0 ; i < 4 ; i ++)
-               {
-                    r = response[i].rain;
-                    if (r == undefined)
-                    {
-                        r = 0 ;
-                    }
-
-                    rain.push(r);
-               }
-               //console.log(rain)
-
-               return [temp,wind,desp,rain];
-        }
-
         function chart(type){
 
           // destroy previous created graph
@@ -140,8 +97,6 @@
           var xVal = ["Day1", "Day2", "Day3", "Day4" ];
         
           var bar_ctx = document.getElementById('myChart').getContext('2d');
-         
-
               
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
