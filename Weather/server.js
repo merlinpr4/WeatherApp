@@ -13,10 +13,9 @@ app.get('/weather/:city', sendWeather)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-
 function sendWeather(req,res) {
     let city =  req.params.city;
-    console.log('getData');
+    //console.log('getData');
 
     let endpoint = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&units=metric&lang=en&appid=e84ba5f47d90887b1f24bf8990e92a28";
     let coord = null;
@@ -32,11 +31,10 @@ function sendWeather(req,res) {
  
         resp.on('end', () => {
             weatherInfo = JSON.parse(data)
-            result = weatherInfo.list;
-
-            coord = weatherInfo.city.coord;
-            console.log(coord.lat);
-            console.log(coord.lon);
+            result = weatherInfo.list;  
+            coord =  weatherInfo.city.coord  ;
+            summary = null ;
+     
             let airPoll = "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=" + coord.lat+ "&lon=" + coord.lon + "&appid=e84ba5f47d90887b1f24bf8990e92a28" ;
             
             https.get(airPoll,(resp) => {   
@@ -57,20 +55,14 @@ function sendWeather(req,res) {
                     }
                     
                     pollAvg = pollSum/size;
-                    console.log( "avg:" + pollAvg  );      
+                    console.log( "avg:" + pollAvg  );    
+                    
+                    summary = getSummary(result,pollAvg);
+                    res.json(summary);
                 
                 })
            
         });
-
-        console.log( "avg2:" + pollAvg  );
-                   
-        // console.log(result);
-
-        summary = getSummary(result)
-        console.log(summary);
-
-        res.json(summary);
 
         });  
 
@@ -78,10 +70,8 @@ function sendWeather(req,res) {
      
 } 
 
-
-
-      //Function that summarises the key values for the tables
-      function getSummary(response){
+      //Function that summarises the key values for the tables and packing info
+      function getSummary(response,poll){
         //temp summary
         temp = []
         for (i = 0 ; i < 4 ; i ++)
@@ -106,7 +96,7 @@ function sendWeather(req,res) {
         }
         //console.log(desp)
 
-         //weather description summary
+         //rain summary
          rain = []
          for (i = 0 ; i < 4 ; i ++)
          {
@@ -118,7 +108,63 @@ function sendWeather(req,res) {
 
               rain.push(r);
          }
-         //console.log(rain)
+      
 
-         return [temp,wind,desp,rain];
+         mask = false;
+        
+         if (poll > 10){
+            mask = true;
+         }
+        
+         weatherType = getTypeWeather(temp);
+         rainFall = getRainFall(rain);
+        
+
+         return [temp,wind,desp,rain,weatherType,rainFall,mask];
+  }
+
+  //function that checks if there is a slight chance of rain in coming days
+  function getRainFall(rain)
+  {
+    rainChance = false ;
+      sum = 0 ;
+      for ( var i = 0 ; i < rain.length ; i++)
+      {
+          sum += rain[i];
+      }
+
+      if (sum > 0)
+      {
+          rainChance = true;
+      }
+
+   return rainChance ;
+  }
+
+//gets the type of weather for coming days based on temperature
+  function getTypeWeather(temp){
+      type = ""
+      sum = 0 ;
+      
+      for ( var i = 0 ; i < temp.length ; i++)
+      {
+          sum += temp[i];
+      }
+
+      avg = sum/4 ;
+      
+      if (avg < 12)
+      {
+          type = "cold";
+      }
+      else if (avg >= 12 && avg <= 24)
+      {
+          type = "mild";
+      }
+      else 
+      {
+          type = "hot"
+      }
+
+      return type ;
   }

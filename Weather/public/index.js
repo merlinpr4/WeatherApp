@@ -9,11 +9,11 @@
         wind:null,
         rain:null,
         rainFall:null,
+        poll:null,
         backColor:"#ADD8E6",
         weatherType:null},
     methods:{
         GetWeath : getWeather
-
         }
     })
 
@@ -25,88 +25,30 @@
         .then( response => response.json())
         .then (response => {
             this.result = response;
-         //   console.log(response[0]);
-            //console.log(this.result);
-            //summary = getSummary(this.result);
-            this.temp = response[0];
-           // console.log("temp" + temp);
-           // console.log(this.temp);
-            this.wind = response[1];
-            this.weathDesc = response[2];
-            this.rain = response[3];
+            this.temp = this.result[0];
+            this.wind = this.result[1];
+            this.weathDesc = this.result[2];
+            this.rain = this.result[3];
+            this.weatherType = this.result[4];
+            this.rainFall = this.result[5];
+            this.poll = this.result[6];
 
-           // console.log(this.rain);
-           // console.log(this.temp);
-            this.weatherType = getTypeWeather(this.temp);
-            this.rainFall= getRainFall(this.rain);
-
-
-            chart(this.weatherType);
-
+            chart(this.weatherType,this.temp);          
         })
+      
         }
 
-        function getRainFall(rain)
-        {
-            sum = 0 ;
-            for ( var i = 0 ; i < rain.length ; i++)
-            {
-                sum += rain[i];
-            }
-
-            if (sum > 0)
-            {
-                rainChance = true;
-            }
-
-         return rainChance ;
-        }
-
-
-        function getTypeWeather(temp){
-            type = ""
-            sum = 0 ;
-            
-            for ( var i = 0 ; i < temp.length ; i++)
-            {
-                sum += temp[i];
-            }
-
-            avg = sum/4 ;
-            
-            if (avg < 12)
-            {
-                type = "cold";
-            }
-            else if (avg >= 12 && avg <= 24)
-            {
-                type = "mild";
-            }
-            else 
-            {
-                type = "hot"
-            }
-
-            return type ;
-        }
-
-
-        function chart(type){
-
-          // destroy previous created graph
-        console.log("TEmp" );
-        console.log(this.temp);
-        if (myChart) {
-          myChart.destroy()
-         }
+        //created a barchart based on the temperature for next 4 days that changes colour based on weather type
+        function chart(type, temp){
+ 
+          if (myChart) {
+            myChart.destroy()
+          }
 
           var xVal = ["Day1", "Day2", "Day3", "Day4" ];
-        
           var bar_ctx = document.getElementById('myChart').getContext('2d');
-              
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
-         
           //console.log(type);
 
           if(type == "cold"){
@@ -132,7 +74,7 @@
             datasets: [{
               label: "temperature",
               backgroundColor: colours,
-              data: this.temp,
+              data: temp,
               order:1 , 
               borderWidth: 1
             }]
