@@ -17,7 +17,8 @@
    
 </head>
 
-<body style= "background-color: #ADD8E6"">
+<!--<body :style= "{'background-color': (weatherType==cold)? 'blue': 'red' }" > -->
+  <body style= "background-color:#ADD8E6" ></body>
 
   
   <nav class="navbar navbar-light" style="background-color: #72bcd4">
@@ -64,7 +65,7 @@
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td>Description</td>
+                                    <th>Description:</th>
                                     <td> {{weathDesc[0]}} </td>
                                     <td> {{weathDesc[1]}} </td>
                                     <td> {{weathDesc[2]}} </td>
@@ -72,14 +73,14 @@
                                 </tr>
 
                                   <tr style="background-color:  #add8e6" > 
-                                    <td>Temperature</td>
+                                    <th>Temperature:</th>
                                       <td> {{temp[0]}} °C </td>
                                       <td> {{temp[1]}} °C</td>
                                       <td> {{temp[2]}} °C</td>
                                       <td> {{temp[3]}} °C</td>
                                     
                                   <tr>
-                                        <td>Wind speed</td>
+                                        <th>Wind speed:</th>
                                         <td> {{wind[0]}} meter/sec</td>
                                         <td> {{wind[1]}} meter/sec</td>
                                         <td> {{wind[2]}} meter/sec</td>
@@ -87,7 +88,7 @@
 
                                     </tr>
                                     <tr style="background-color:#add8e6" >
-                                      <td>Rainfall</td>
+                                      <th>Rainfall:</th>
                                         <td> {{rain[0]}} mm</td>
                                         <td> {{rain[1]}} mm</td>
                                         <td> {{rain[2]}} mm</td>
@@ -108,12 +109,11 @@
         <div class="row">
         <div class="col-md-12">
           <div class ="card" >
-              <h5 class = "card-title">Packing Info</h5>
-              <p class="card-text"> The weather forecast for the next few is {{weatherType}}</p>
-              It is advised to pack
-              <p v-if = weatherType=="cold" > Warm jacket, scarf, knitted gloves and wooly socks :) </p>
-              <p v-if = weatherType=="mild" > Long sleve tops and caridgans :) </p>
-              <p v-if = weatherType=="hot" > your shorts, sunglasses and sunscreen :) </p>
+              <h5 class = "card-title">Information for Tourists</h5>
+              <p class="card-text"> The weather forecast for the next few is {{weatherType}} so it is advised to pack</p>
+              <p v-if = weatherType=="cold" > Warm jackets, scarfs, knitted gloves and wooly socks :) </p>
+              <p v-if = weatherType=="mild" > Long sleve tops and cardigans :) </p>
+              <p v-if = weatherType=="hot" >  Shorts, sunglasses and sunscreen :) </p>
               <p v-if = rainFall==true > Bring an umbrella as there is a chance of rain in the coming days</p>
           </div>
         </div>
@@ -122,6 +122,15 @@
 </div>
 </div>
 
+<div v-if = result!==null >
+  <div class = "container">
+    <div class ="card" >
+      <div class="chart-container" style="position: relative;">
+        <canvas id="myChart" ></canvas>
+      </div>
+   </div>
+  </div>
+</div>
 
 </body>
 
@@ -129,5 +138,6 @@
       <script type="text/javascript"  src="index.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+      <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1"></script>
+      
 </html>
