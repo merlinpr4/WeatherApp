@@ -63,7 +63,6 @@ function sendWeather(req,res) {
            
         });
 
-        console.log("hi");
         console.log( "avg2:" + pollAvg  );
                    
         // console.log(result);

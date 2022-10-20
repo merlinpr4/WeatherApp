@@ -25,18 +25,21 @@
         .then( response => response.json())
         .then (response => {
             this.result = response;
-            //console.log(response);
+         //   console.log(response[0]);
             //console.log(this.result);
             //summary = getSummary(this.result);
-            this.temp = this.result[0];
+            this.temp = response[0];
            // console.log("temp" + temp);
            // console.log(this.temp);
-            this.wind = this.result[1];
-            this.weathDesc = this.result[2];
-            this.rain = this.result[3];
+            this.wind = response[1];
+            this.weathDesc = response[2];
+            this.rain = response[3];
 
+           // console.log(this.rain);
+           // console.log(this.temp);
             this.weatherType = getTypeWeather(this.temp);
             this.rainFall= getRainFall(this.rain);
+
 
             chart(this.weatherType);
 
@@ -46,23 +49,24 @@
         function getRainFall(rain)
         {
             sum = 0 ;
-            for ( var i = 0 ; i < temp.length ; i++)
+            for ( var i = 0 ; i < rain.length ; i++)
             {
-                sum += temp[i];
+                sum += rain[i];
             }
 
             if (sum > 0)
             {
-                rain = true;
+                rainChance = true;
             }
 
-         return rain ;
+         return rainChance ;
         }
 
 
         function getTypeWeather(temp){
             type = ""
             sum = 0 ;
+            
             for ( var i = 0 ; i < temp.length ; i++)
             {
                 sum += temp[i];
@@ -90,6 +94,8 @@
         function chart(type){
 
           // destroy previous created graph
+        console.log("TEmp" );
+        console.log(this.temp);
         if (myChart) {
           myChart.destroy()
          }
@@ -101,7 +107,7 @@
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
          
-          console.log(type);
+          //console.log(type);
 
           if(type == "cold"){
             colours.addColorStop(0, "#2f50e4");
