@@ -1,4 +1,7 @@
     let myChart ;
+  
+    const body = document.body;
+    const changeBackground = colours => body.setAttribute("color",color);
     var app = new Vue({
     el:'#app',
     data: {
@@ -10,6 +13,7 @@
         rain:null,
         rainFall:null,
         poll:null,
+        days:null,
         backColor:"#ADD8E6",
         weatherType:null},
     methods:{
@@ -45,7 +49,7 @@
             myChart.destroy()
           }
 
-          var xVal = ["Day1", "Day2", "Day3", "Day4" ];
+          var xVal = ["Day 1", "Day 2", "Day 3", "Day 4" ];
           var bar_ctx = document.getElementById('myChart').getContext('2d');
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
@@ -88,7 +92,7 @@
             },
             plugins: {
               deferred: {
-                yOffset: '85%'
+                yOffset: '85%',
               }
           },
           title: {

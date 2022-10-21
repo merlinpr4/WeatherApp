@@ -55,7 +55,7 @@ function sendWeather(req,res) {
                     }
                     
                     pollAvg = pollSum/size;
-                    console.log( "avg:" + pollAvg  );    
+                  //  console.log( "avg:" + pollAvg  );    
                     
                     summary = getSummary(result,pollAvg);
                     res.json(summary);
@@ -109,12 +109,12 @@ function sendWeather(req,res) {
               rain.push(r);
          }
       
-
          mask = false;
-        
          if (poll > 10){
             mask = true;
          }
+
+       
         
          weatherType = getTypeWeather(temp);
          rainFall = getRainFall(rain);
