@@ -1,7 +1,5 @@
     let myChart ;
-  
-    const body = document.body;
-    const changeBackground = colours => body.setAttribute("color",color);
+    let chart2 ;
     var app = new Vue({
     el:'#app',
     data: {
@@ -13,8 +11,7 @@
         rain:null,
         rainFall:null,
         poll:null,
-        days:null,
-        backColor:"#ADD8E6",
+        humidity:null,
         weatherType:null},
     methods:{
         GetWeath : getWeather
@@ -36,14 +33,16 @@
             this.weatherType = this.result[4];
             this.rainFall = this.result[5];
             this.poll = this.result[6];
+            this.humidity = this.result[7];
 
-            chart(this.weatherType,this.temp,this.wind);          
+            var xVal = ["Day 1", "Day 2", "Day 3", "Day 4" ]; 
+            chart(this.weatherType,this.temp,this.wind,xVal);    
+            humidityLine(this.humidity,xVal);      
         })
-      
         }
 
-        //created a barchart based on the temperature for next 4 days that changes colour based on weather type
-        function chart(type, temp,speed){
+        //created a barchart based on the windspeed and temperature andfor next 4 days. Temperature bars changes colour based on weather type
+        function chart(type, temp,speed,xVal){
  
           if (myChart) {
             myChart.destroy()
@@ -53,13 +52,11 @@
           var bar_ctx = document.getElementById('myChart').getContext('2d');
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
-          //console.log(type);
-
           var colours2 = bar_ctx.createLinearGradient(0, 0, 0, 600);
           colours2.addColorStop(0, "#8F62B6");
           colours2.addColorStop(1, "#f5c9e6");
 
-
+          //colour bars based on weather type
           if(type == "cold"){
             colours.addColorStop(0, "#2f50e4");
             colours.addColorStop(1,"#73c6ed" );
@@ -76,6 +73,7 @@
             this.backColor = "#ADD8E6";
           }
   
+        //create bar
         myChart = new Chart("myChart", {
           type: "bar",
           data: {
@@ -114,3 +112,40 @@
         });
 
       }
+
+     //linegraph of commits versus size in KB of all repos
+function humidityLine(hum,xVal){
+  
+  if (chart2) {
+    chart2.destroy()
+  }
+
+  var chart2 = new Chart("chart2", {
+    type: "line",
+    data: {
+      labels: xVal,
+      datasets: [{
+        label: "humidity",
+        data: hum,
+        borderColor: "#ff69b4",
+        fill: false
+      }]
+    },
+    options: {
+      legend: {
+        display: true
+      },
+      title: {
+        display: true,
+        text: 'Humidity per day'
+    },
+    plugins: {
+      deferred: {
+        yOffset: '60%'
+      }
+    }
+  }
+  });
+}
+
+

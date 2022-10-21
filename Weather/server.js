@@ -1,4 +1,3 @@
-const axios = require('axios');
 const express = require('express')
 const app = express()
 const port = 3000;
@@ -13,6 +12,7 @@ app.get('/weather/:city', sendWeather)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+//function waits for city from front end and calls openweather api to figure out weather and air pollution data
 function sendWeather(req,res) {
     let city =  req.params.city;
     //console.log('getData');
@@ -45,32 +45,25 @@ function sendWeather(req,res) {
                 });
 
                 resp.on('end', () =>{
+                    //figure out average air pollution for the next 5 days
                     polldata = JSON.parse(data);
-                    //console.log(polldata);
                     pollSum = 0 ;
                     size = polldata.list.length
                     for (var i = 0 ; i <  size ; i ++ )
                     {
                         pollSum += polldata.list[i].components.pm2_5 ;
                     }
-                    
                     pollAvg = pollSum/size;
-                  //  console.log( "avg:" + pollAvg  );    
-                    
                     summary = getSummary(result,pollAvg);
                     res.json(summary);
                 
                 })
-           
         });
-
         });  
-
     })
-     
 } 
 
-      //Function that summarises the key values for the tables and packing info
+      //Function that summarises the key values for the tables and packing info into arrays
       function getSummary(response,poll){
         //temp summary
         temp = []
@@ -108,19 +101,23 @@ function sendWeather(req,res) {
 
               rain.push(r);
          }
+
+        //humiditiy
+        hum = []
+        for (i = 0 ; i < 4 ; i ++)
+        {
+            hum.push(response[i].humidity);
+        }
       
          mask = false;
          if (poll > 10){
             mask = true;
          }
 
-       
-        
          weatherType = getTypeWeather(temp);
          rainFall = getRainFall(rain);
         
-
-         return [temp,wind,desp,rain,weatherType,rainFall,mask];
+         return [temp,wind,desp,rain,weatherType,rainFall,mask,hum];
   }
 
   //function that checks if there is a slight chance of rain in coming days
