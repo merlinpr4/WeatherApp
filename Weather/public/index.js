@@ -37,13 +37,13 @@
             this.rainFall = this.result[5];
             this.poll = this.result[6];
 
-            chart(this.weatherType,this.temp);          
+            chart(this.weatherType,this.temp,this.wind);          
         })
       
         }
 
         //created a barchart based on the temperature for next 4 days that changes colour based on weather type
-        function chart(type, temp){
+        function chart(type, temp,speed){
  
           if (myChart) {
             myChart.destroy()
@@ -54,6 +54,11 @@
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
           //console.log(type);
+
+          var colours2 = bar_ctx.createLinearGradient(0, 0, 0, 600);
+          colours2.addColorStop(0, "#8F62B6");
+          colours2.addColorStop(1, "#f5c9e6");
+
 
           if(type == "cold"){
             colours.addColorStop(0, "#2f50e4");
@@ -75,13 +80,19 @@
           type: "bar",
           data: {
             labels: xVal,
-            datasets: [{
+            datasets: [
+            {
               label: "temperature",
               backgroundColor: colours,
               data: temp,
-              order:1 , 
-              borderWidth: 1
-            }]
+              order:0
+            },
+            {
+              label:"windspeed",
+              backgroundColor:  colours2,
+              data:speed
+            },
+          ]
           },
           options: {
             responsive : true,
@@ -97,7 +108,7 @@
           },
           title: {
             display: true,  
-            text: "Temperature per day"
+            text: "Temperature and Wind speed per day"
           }
         }
         });

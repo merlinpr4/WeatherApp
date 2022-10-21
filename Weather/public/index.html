@@ -70,14 +70,20 @@
                                 </tr>
 
                                   <tr style="background-color:  #97ecbc" > 
-                                    <th>Temperature:</th>
+                                    <th>
+                                     <i class="fa-solid fa-temperature-high"></i>
+                                     Temperature: 
+                                    </th>
                                       <td> {{temp[0]}} °C </td>
                                       <td> {{temp[1]}} °C</td>
                                       <td> {{temp[2]}} °C</td>
                                       <td> {{temp[3]}} °C</td>
                                     
                                   <tr>
-                                        <th>Wind speed:</th>
+                                        <th> 
+                                          <i class="fa-solid fa-wind"></i>
+                                          Wind speed:  
+                                        </th>
                                         <td> {{wind[0]}} meter/sec</td>
                                         <td> {{wind[1]}} meter/sec</td>
                                         <td> {{wind[2]}} meter/sec</td>
@@ -85,7 +91,10 @@
 
                                     </tr>
                                     <tr style="background-color: #97ecbc" >
-                                      <th>Rainfall:</th>
+                                      <th>
+                                        <i class="fa-solid fa-droplet"></i>
+                                        Rainfall:
+                                      </th>
                                         <td> {{rain[0]}} mm</td>
                                         <td> {{rain[1]}} mm</td>
                                         <td> {{rain[2]}} mm</td>
@@ -107,25 +116,34 @@
     
  
     <div v-if = result!==null >
-      <div class="container-fluid">
-        <div class="row mt-3">
+      <div class="container-fluid" >
+        <div class="row  mt-3">
         <div class="col-md-12">
-          <div class ="card" >
-            <h5 class =  "font-weight-bold">
-            <i class="bi bi-info-circle-fill"> </i>
+          <div class ="card w-80"  >  
+            <h5 class =  "font-weight-bold"> &nbsp;
+              <i class="fa-solid fa-circle-info" ></i>
               Information for Tourists</h5> 
-              <p v-if = weatherType=="cold" >  The next few days are going to be chilly. <i class="bi bi-snow2"></i> <br> 
-                It is advised to pack warm jackets, scarfs, knitted gloves and wooly socks </p>
-              <p v-if = weatherType=="mild" >It is going to be a mild few days. <br> Pack some ong sleve tops and cardigans </p>
-              <p v-if = weatherType=="hot" >  It is going to be a hot few days. <i class="bi bi-brightness-high"></i> <br>
-                  Make sure to bring some shorts, sunglasses and sunscreen 
-                <i class="bi bi-emoji-sunglasses"></i>
+              <p v-if = weatherType=="cold" > &nbsp; The next few days are going to be chilly
+                <i class="fa-solid fa-snowflake fa-spin"></i> <br> 
+              &nbsp; It is advised to pack warm jackets, scarfs, knitted gloves and wooly socks
+                <i class="fa-solid fa-mitten"></i>
+             </p>
+              <p v-if = weatherType=="mild" >&nbsp; It is going to be a mild few days
+                <i class="fa-solid fa-cloud"></i> <br>
+              &nbsp; Pack some t-shirts and cardigans 
+                <i class="fa-solid fa-shirt"></i>
               </p>
-              <p v-if = rainFall==true > Bring an umbrella as there is a chance of rain in the coming days
-                <i class="bi bi-umbrella"></i>
+              <p v-if = weatherType=="hot" >&nbsp; It is going to be a hot few days
+                  <i class="fa-solid fa-sun fa-spin"></i> <br> 
+                &nbsp; Make sure to bring some shorts, sunglasses and sunscreen 
+                  <i class="bi bi-emoji-sunglasses"></i>
               </p>
-              
-              <p v-if = poll==true >Wear a mask as the air pollution in this city for the next 5 days is not great.  </p>
+              <p v-if = rainFall==true > &nbsp; Bring an umbrella as there is a chance of rain in the coming days 
+                <i class="fa-solid fa-umbrella fa-shake" ></i>
+              </p>
+              <p v-if = poll==true > &nbsp; Wear a mask as the air pollution in this city for the next 5 days is not great.  
+                <i class="fa-solid fa-mask-face"></i>
+              </p>
         </div>
       </div>
     </div>
@@ -137,14 +155,17 @@
         <canvas id="myChart" ></canvas>
       </div>
   </div>
-
-    </div>  
-
+    </div>
 </div>
+
+
+    
+
 </body>
 
-      <!--graph scripts and bootstrap cdn links-->
+      <!--graph scripts and icons scripts-->
       <script type="text/javascript"  src="index.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+      <script src="https://kit.fontawesome.com/aa4349868b.js" crossorigin="anonymous"></script>
 </html>
