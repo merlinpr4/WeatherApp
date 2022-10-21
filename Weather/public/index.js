@@ -48,15 +48,15 @@
             myChart.destroy()
           }
 
-          var xVal = ["Day 1", "Day 2", "Day 3", "Day 4" ];
           var bar_ctx = document.getElementById('myChart').getContext('2d');
           var colours = bar_ctx.createLinearGradient(0, 0, 0, 600);
 
+          //colour of windspeed bars
           var colours2 = bar_ctx.createLinearGradient(0, 0, 0, 600);
           colours2.addColorStop(0, "#8F62B6");
           colours2.addColorStop(1, "#f5c9e6");
 
-          //colour bars based on weather type
+          //gradient colour bars based on weather type
           if(type == "cold"){
             colours.addColorStop(0, "#2f50e4");
             colours.addColorStop(1,"#73c6ed" );
@@ -73,7 +73,7 @@
             this.backColor = "#ADD8E6";
           }
   
-        //create bar
+        //create barchart
         myChart = new Chart("myChart", {
           type: "bar",
           data: {
@@ -113,7 +113,7 @@
 
       }
 
-     //linegraph of commits versus size in KB of all repos
+//humidity line graph
 function humidityLine(hum,xVal){
   
   if (chart2) {

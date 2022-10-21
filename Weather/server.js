@@ -38,7 +38,7 @@ function sendWeather(req,res) {
             let airPoll = "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=" + coord.lat+ "&lon=" + coord.lon + "&appid=e84ba5f47d90887b1f24bf8990e92a28" ;
             
             https.get(airPoll,(resp) => {   
-                let data = ""
+                let data = "";
                 
                 resp.on('data', (info) => {
                     data += info;
@@ -48,7 +48,7 @@ function sendWeather(req,res) {
                     //figure out average air pollution for the next 5 days
                     polldata = JSON.parse(data);
                     pollSum = 0 ;
-                    size = polldata.list.length
+                    size = polldata.list.length;
                     for (var i = 0 ; i <  size ; i ++ )
                     {
                         pollSum += polldata.list[i].components.pm2_5 ;
@@ -66,7 +66,7 @@ function sendWeather(req,res) {
       //Function that summarises the key values for the tables and packing info into arrays
       function getSummary(response,poll){
         //temp summary
-        temp = []
+        temp = [];
         for (i = 0 ; i < 4 ; i ++)
         {
             temp.push(response[i].temp.day);
